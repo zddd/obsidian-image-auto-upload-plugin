@@ -143,7 +143,15 @@ export class PicGoCoreUploader {
     return res;
   }
   async exec(command: string) {
-    let { stdout } = await exec(command);
+    let { stdout } = await exec(command, {
+      env: {
+        PATH: '/bin:/usr/bin:/usr/local/bin'
+      }
+    }, function (error, stdout, stderr) {
+      console.log(error);
+      console.log(stdout);
+      console.log(stderr);
+    });
     const res = await streamToString(stdout);
     return res;
   }
